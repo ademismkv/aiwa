@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -30,13 +29,11 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 border border-white/30 flex items-center justify-center group-hover:border-white transition-colors duration-500">
-              <span className="text-white font-light text-xl tracking-[0.2em]">A</span>
+          <Link to="/" className="flex items-center space-x-5 group">
+            <div className="flex items-center justify-center">
+              <img src="/logo.svg" alt="Logo" className="h-3 sm:h-4 lg:h-5 object-contain" />
+              <img src="/AIWA.svg" alt="AIWA Logo" className="h-3 sm:h-4 lg:h-5 object-contain ml-1 sm:ml-1.5 lg:ml-2.5" />
             </div>
-            <span className="text-white heading-luxury text-xl tracking-[0.15em]">
-              AIWA RENT
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
