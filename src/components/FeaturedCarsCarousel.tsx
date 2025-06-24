@@ -1,5 +1,4 @@
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -23,42 +22,28 @@ const FeaturedCarsCarousel = ({ cars }: FeaturedCarsCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
+  // Auto-slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev < cars.length - 1 ? prev + 1 : 0));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [cars.length]);
+
+  useEffect(() => {
     if (!scrollContainerRef.current) return;
-    
     const container = scrollContainerRef.current;
     const cardWidth = container.offsetWidth;
-    
-    if (direction === 'left') {
-      setCurrentIndex(prev => (prev > 0 ? prev - 1 : cars.length - 1));
-    } else {
-      setCurrentIndex(prev => (prev < cars.length - 1 ? prev + 1 : 0));
-    }
-    
     const newScrollPosition = currentIndex * cardWidth;
     container.scrollTo({
       left: newScrollPosition,
       behavior: 'smooth'
     });
-  };
+  }, [currentIndex]);
 
   return (
     <div className="relative w-full">
-      {/* Navigation Arrows */}
-      <button
-        onClick={() => scroll('left')}
-        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-16 sm:h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group"
-      >
-        <ChevronLeft className="text-white group-hover:scale-110 transition-transform" size={24} />
-      </button>
-      
-      <button
-        onClick={() => scroll('right')}
-        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 sm:w-16 sm:h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 group"
-      >
-        <ChevronRight className="text-white group-hover:scale-110 transition-transform" size={24} />
-      </button>
-
+      {/* Navigation Arrows Removed */}
       {/* Carousel Container */}
       <div
         ref={scrollContainerRef}
